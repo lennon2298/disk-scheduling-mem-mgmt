@@ -50,8 +50,9 @@ int main()
         printf("Failed to load GLAD");
         return -1;
     }
-
+    compileShader();
     initBg();
+    //initOpt3();
 
     while(!glfwWindowShouldClose(window))
     {
@@ -75,6 +76,9 @@ void processInput(GLFWwindow *window)
     {
         case 0:
             back();
+            break;
+        case 1:
+            opt3a();
             break;
     }
 }
