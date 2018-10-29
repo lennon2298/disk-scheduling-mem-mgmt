@@ -6,17 +6,24 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "Resources/Headers/stb_image.h"
+#define STB_IMAGE_IMPLEMENTATION
 
 #include "firstscreen.h"
 
 void processInput(GLFWwindow*);
-//void set_framebuffer_size_callback(GLFWwindow*, int, int);
-//void mouse_callback(GLFWwindow*, double, double);
+void set_framebuffer_size_callback(GLFWwindow*, int, int);
+void mouse_callback(GLFWwindow*, int, int, int);
+void cursor_callback(GLFWwindow*, double, double);
+void get_resolution(int* window_width, int* window_height);
 
 //Window Setting
-const int WIDTH = 1366, HEIGHT = 768;
-int state = 0;
+const int WIDTH = 800, HEIGHT = 450;
+int state = 0; //0 for main screen, 1 for DS, 2 for PF, 3 for Frag/Defrag
+int diskSwitch = 0;
+int pageSwitch = 0;
+int fragSwitch = 0;
+
+double lastX, lastY;
 
 int main()
 {
@@ -30,7 +37,7 @@ int main()
     glfwWindowHint(GLFW_RESIZABLE,GL_TRUE);
 
     //Creating a Window
-    GLFWwindow *window = glfwCreateWindow(WIDTH,HEIGHT,"Visual representation of Algos",NULL,NULL);
+    GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Visual representation of Algos", NULL, NULL);
     if(window == NULL)
     {
         printf("Failed to create Window");
@@ -40,8 +47,9 @@ int main()
 
     //Setting the Current Window to the one we created
     glfwMakeContextCurrent(window);
-    //glfwSetFramebufferSizeCallback(window,set_framebuffer_size_callback);
-    //glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetFramebufferSizeCallback(window,set_framebuffer_size_callback);
+    glfwSetMouseButtonCallback(window, mouse_callback);
+    glfwSetCursorPosCallback(window, cursor_callback);
 
 
     //Loading GLAD and other OpenGL Libs 
@@ -52,7 +60,11 @@ int main()
     }
     compileShader();
     initBg();
-    //initOpt3();
+    initDisk();
+    initFcfs();
+    initScan();
+    initSstf();
+    initLook();
 
     while(!glfwWindowShouldClose(window))
     {
@@ -72,13 +84,115 @@ void processInput(GLFWwindow *window)
     {
         glfwSetWindowShouldClose(window, GL_TRUE);
     }
+    if(glfwGetKey(window, GLFW_KEY_BACKSPACE) == GLFW_PRESS)
+    {
+        diskSwitch = 0;
+    }
+    if(glfwGetKey(window, GLFW_KEY_DELETE) == GLFW_PRESS)
+    {
+        state = 0;
+    }
+
     switch(state)
     {
         case 0:
             back();
             break;
         case 1:
-            opt3a();
+            diskScreen();
+            break;
+        default :
+            back();
             break;
     }
+
+    switch(diskSwitch)
+    {
+        case 1:
+            dispFcfs();
+            break;
+        case 2:
+            dispSstf();
+            break;
+        case 3:
+            dispLook();
+            break;
+        case 4:
+            dispScan();
+            break;
+    }
+}
+
+void set_framebuffer_size_callback(GLFWwindow *window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+
+void mouse_callback(GLFWwindow* window, int button, int action, int mod )
+{
+    
+    if (state == 0)
+    {
+        if(lastX < 0.50 && lastX > -0.50)
+        {
+            if(lastY < 0.15 && lastY > -0.10)
+            {
+                state = 1;
+            }
+            else if(lastY < -0.25 && lastY > -0.50)
+            {
+                //state = 2;
+            }
+            else if(lastY < -0.65 && lastY > -0.90)
+            {
+                //state = 3;
+            }
+        }
+    }
+    
+    if (state == 1)
+    {
+        if(lastX < 0.75 && lastX > 0.10)
+        {
+            if(lastY < 0.90 && lastY > 0.20)
+            {
+                diskSwitch = 1; //fcfs
+            }
+        }
+        if(lastX < -0.10 && lastX > -0.75)
+        {
+            if(lastY < 0.90 && lastY > 0.20)
+            {
+                diskSwitch = 2; //sstf
+            }
+        }
+        if(lastX < -0.10 && lastX > -0.75)
+        {
+            if(lastY < -0.20 && lastY > -0.90)
+            {
+                diskSwitch = 3; //look
+            }
+        }
+        if(lastX < 0.75 && lastX > 0.10)
+        {
+            if(lastY < -0.20 && lastY > -0.90)
+            {
+                diskSwitch = 4; //scan
+            }
+        }
+    }
+}
+
+void cursor_callback(GLFWwindow *window, double xPos, double yPos)
+{
+    int width, height;
+    glfwGetWindowSize(window, &width, &height);
+    lastX = -1.0 + 2.0 * xPos / width;
+    lastY =  1.0 - 2.0 * yPos / height;
+}
+
+void get_resolution(int* window_width, int* window_height) {
+    const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    *window_width = mode->width;
+    *window_height = mode->height;
 }
