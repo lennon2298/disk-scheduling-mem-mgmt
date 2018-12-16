@@ -1,4 +1,4 @@
-    #include <glad/glad.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <stdio.h>
@@ -6,7 +6,10 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include <kazmath/kazmath.h>
+
 #include "Resources/Headers/stb_image.h"
+#include "rendertext.h"
 
 //Vertex BG Shader
 const char *vertexBgShaderSource ="#version 330 core\n"
@@ -138,7 +141,7 @@ void initBg()
     glGenVertexArrays(1, &VAO[0]);
     glGenBuffers(1, &VBO[0]);
     glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[0]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
@@ -192,7 +195,7 @@ void initBg()
     glGenVertexArrays(1, &VAO[1]);
     glGenBuffers(1, &VBO[1]);
     //glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[1]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
@@ -246,7 +249,7 @@ void initBg()
     glGenVertexArrays(1, &VAO[2]);
     glGenBuffers(1, &VBO[2]);
     //glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[2]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[2]);
@@ -301,7 +304,7 @@ void initBg()
     glGenVertexArrays(1, &VAO[3]);
     glGenBuffers(1, &VBO[3]);
     //glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[3]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[3]);
@@ -414,7 +417,7 @@ void initDisk()
     glGenVertexArrays(1, &VAO[4]);
     glGenBuffers(1, &VBO[4]);
     glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[4]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[4]);
@@ -468,7 +471,7 @@ void initDisk()
     glGenVertexArrays(1, &VAO[5]);
     glGenBuffers(1, &VBO[5]);
     //glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[5]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[5]);
@@ -522,7 +525,7 @@ void initDisk()
     glGenVertexArrays(1, &VAO[6]);
     glGenBuffers(1, &VBO[6]);
     //glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[6]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[6]);
@@ -576,7 +579,7 @@ void initDisk()
     glGenVertexArrays(1, &VAO[7]);
     glGenBuffers(1, &VBO[7]);
     //glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[7]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[7]);
@@ -630,7 +633,7 @@ void initDisk()
     glGenVertexArrays(1, &VAO[8]);
     glGenBuffers(1, &VBO[8]);
     //glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[8]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[8]);
@@ -748,7 +751,7 @@ void initFcfs()
     glGenVertexArrays(1, &VAO[9]);
     glGenBuffers(1, &VBO[9]);
     glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[9]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[9]);
@@ -832,7 +835,7 @@ void initScan()
     glGenVertexArrays(1, &VAO[10]);
     glGenBuffers(1, &VBO[10]);
     glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[10]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[10]);
@@ -916,7 +919,7 @@ void initSstf()
     glGenVertexArrays(1, &VAO[11]);
     glGenBuffers(1, &VBO[11]);
     glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[11]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[11]);
@@ -1000,7 +1003,7 @@ void initLook()
     glGenVertexArrays(1, &VAO[12]);
     glGenBuffers(1, &VBO[12]);
     glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(VAO[12]);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[12]);

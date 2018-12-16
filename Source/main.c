@@ -9,6 +9,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "firstscreen.h"
+#include "rendertext.h"
 
 void processInput(GLFWwindow*);
 void set_framebuffer_size_callback(GLFWwindow*, int, int);
@@ -51,7 +52,6 @@ int main()
     glfwSetMouseButtonCallback(window, mouse_callback);
     glfwSetCursorPosCallback(window, cursor_callback);
 
-
     //Loading GLAD and other OpenGL Libs 
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -65,6 +65,11 @@ int main()
     initScan();
     initSstf();
     initLook();
+    initTextGlyphs();
+
+    //glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     while(!glfwWindowShouldClose(window))
     {
@@ -72,8 +77,39 @@ int main()
         //glClearColor(0.4f, 0.3f, 0.6f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         processInput(window);
-        glfwSwapBuffers(window);
+        
         glfwPollEvents();
+
+        switch(state)
+        {
+            case 0:
+                back();
+                break;
+            case 1:
+                diskScreen();
+                break;
+            default :
+                back();
+                break;
+        }
+
+        switch(diskSwitch)
+        {
+            case 1:
+                dispFcfs();
+                break;
+            case 2:
+                dispSstf();
+                break;
+            case 3:
+                dispLook();
+                break;
+            case 4:
+                dispScan();
+                break;
+        }
+
+        glfwSwapBuffers(window);
     }
     
 }
@@ -86,40 +122,16 @@ void processInput(GLFWwindow *window)
     }
     if(glfwGetKey(window, GLFW_KEY_BACKSPACE) == GLFW_PRESS)
     {
-        diskSwitch = 0;
+        if(diskSwitch!=0)
+        {
+            diskSwitch = 0;
+            state = 1;
+        }
     }
     if(glfwGetKey(window, GLFW_KEY_DELETE) == GLFW_PRESS)
     {
         state = 0;
-    }
-
-    switch(state)
-    {
-        case 0:
-            back();
-            break;
-        case 1:
-            diskScreen();
-            break;
-        default :
-            back();
-            break;
-    }
-
-    switch(diskSwitch)
-    {
-        case 1:
-            dispFcfs();
-            break;
-        case 2:
-            dispSstf();
-            break;
-        case 3:
-            dispLook();
-            break;
-        case 4:
-            dispScan();
-            break;
+        diskSwitch = 0;
     }
 }
 
@@ -157,6 +169,7 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mod )
             if(lastY < 0.90 && lastY > 0.20)
             {
                 diskSwitch = 1; //fcfs
+                state = 6;
             }
         }
         if(lastX < -0.10 && lastX > -0.75)
@@ -164,6 +177,7 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mod )
             if(lastY < 0.90 && lastY > 0.20)
             {
                 diskSwitch = 2; //sstf
+                state = 6;
             }
         }
         if(lastX < -0.10 && lastX > -0.75)
@@ -171,6 +185,7 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mod )
             if(lastY < -0.20 && lastY > -0.90)
             {
                 diskSwitch = 3; //look
+                state = 6;
             }
         }
         if(lastX < 0.75 && lastX > 0.10)
@@ -178,6 +193,7 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mod )
             if(lastY < -0.20 && lastY > -0.90)
             {
                 diskSwitch = 4; //scan
+                state = 6;
             }
         }
     }
