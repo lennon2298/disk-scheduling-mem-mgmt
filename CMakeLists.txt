@@ -3,7 +3,7 @@ project(minor1)
 
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source")
 set(LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Resources/include")
-set(SOURCES "${SRC_DIR}/main.c")
+set(SOURCES "${SRC_DIR}/rendertext.c" "${SRC_DIR}/main.c" )
 
 if(WIN32)
 	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
@@ -31,3 +31,14 @@ add_library("glad" "${GLAD_DIR}/src/glad.c")
 target_include_directories("glad" PRIVATE "${GLAD_DIR}/include")
 target_include_directories(${PROJECT_NAME} PRIVATE "${GLAD_DIR}/include")
 target_link_libraries(${PROJECT_NAME} "glad" "${CMAKE_DL_LIBS}")
+
+#FreeType
+set(FTP_DIR "${LIB_DIR}/freetype")
+target_link_libraries(${PROJECT_NAME} "freetype" "${FREETYPE2_LIBRARIES}")
+target_include_directories(${PROJECT_NAME} PRIVATE "${FTP_DIR}/freetype")
+
+#KazMath
+set(KAZ_DIR "${LIB_DIR}/kazmath")
+target_include_directories(${PROJECT_NAME} PRIVATE "${KAZ_DIR}/")
+#target_include_directories(${PROJECT_NAME} PRIVATE "${KAZ_DIR}/GL/*.h")
+target_link_libraries(${PROJECT_NAME} "kazmath" "${KAZMATH_LIBS}")
