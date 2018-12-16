@@ -54,3 +54,4 @@ dkms.conf
 # Build and Bin folders
 build/
 bin/
+.*
