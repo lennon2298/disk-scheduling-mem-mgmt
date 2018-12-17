@@ -3,7 +3,7 @@ project(minor1)
 
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source")
 set(LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Resources/include")
-set(SOURCES "${SRC_DIR}/rendertext.c" "${SRC_DIR}/main.c" )
+set(SOURCES "${SRC_DIR}/rendertext.c" "${SRC_DIR}/disksch.c" "${SRC_DIR}/pagerep.c" "${SRC_DIR}/main.c" )
 
 if(WIN32)
 	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
@@ -13,6 +13,8 @@ endif(WIN32)
 add_executable(${PROJECT_NAME} ${SOURCES} )
 target_include_directories(${PROJECT_NAME} PRIVATE "${SRC_DIR}")
 #set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
+
+target_link_libraries(${PROJECT_NAME} "GL")
 
 # GLFW
 set(GLFW_DIR "${LIB_DIR}/GLFW")
@@ -42,3 +44,8 @@ set(KAZ_DIR "${LIB_DIR}/kazmath")
 target_include_directories(${PROJECT_NAME} PRIVATE "${KAZ_DIR}/")
 #target_include_directories(${PROJECT_NAME} PRIVATE "${KAZ_DIR}/GL/*.h")
 target_link_libraries(${PROJECT_NAME} "kazmath" "${KAZMATH_LIBS}")
+
+#Glut
+
+target_link_libraries(${PROJECT_NAME} "glut" ${GLUT_LIBRARY} )
+target_link_libraries(${PROJECT_NAME} "GLU")

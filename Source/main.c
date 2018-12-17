@@ -10,6 +10,7 @@
 
 #include "firstscreen.h"
 #include "rendertext.h"
+#include "pagerep.h"
 
 void processInput(GLFWwindow*);
 void set_framebuffer_size_callback(GLFWwindow*, int, int);
@@ -88,6 +89,8 @@ int main()
             case 1:
                 diskScreen();
                 break;
+            case 2:
+                glfwSetWindowShouldClose(window, GL_TRUE);
             default :
                 back();
                 break;
@@ -110,6 +113,10 @@ int main()
         }
 
         glfwSwapBuffers(window);
+    }
+    if(state == 2)
+    {
+        displayPage();
     }
     
 }
@@ -153,7 +160,7 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mod )
             }
             else if(lastY < -0.25 && lastY > -0.50)
             {
-                //state = 2;
+                state = 2;
             }
             else if(lastY < -0.65 && lastY > -0.90)
             {

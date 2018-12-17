@@ -10,6 +10,7 @@
 
 #include "Resources/Headers/stb_image.h"
 #include "rendertext.h"
+#include "disksch.h"
 
 //Vertex BG Shader
 const char *vertexBgShaderSource ="#version 330 core\n"
@@ -687,7 +688,7 @@ void diskScreen()
 
 void initFcfs()
 {
-    
+    compileShaderDiskAlgo();
     // link shaders
     shaderProgram = glCreateProgram();
     glAttachShader(shaderProgram, vertexShader);
@@ -1030,6 +1031,7 @@ void dispFcfs()
     glBindVertexArray(VAO[9]);
     glUniform1i(textureLocation, 0);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    diskFcfs();
 }
 
 void dispScan()
