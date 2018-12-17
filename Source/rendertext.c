@@ -185,7 +185,7 @@ void renderText( char *text, GLfloat x, GLfloat y, GLfloat scale, kmVec3 color)
 {
     glUseProgram(shaderProgramText);
     glUniform3f(glGetUniformLocation(shaderProgramText, "textColor"), color.x, color.y, color.z);
-    //glActiveTexture(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAOTEXT);
 
     // Iterate through all characters
@@ -193,6 +193,7 @@ void renderText( char *text, GLfloat x, GLfloat y, GLfloat scale, kmVec3 color)
     int c=0;
     while(text[c]) 
     {
+        //printf("%c", text[c]);
         int n = text[c];
         struct Character ch = character[n];
 
@@ -218,9 +219,10 @@ void renderText( char *text, GLfloat x, GLfloat y, GLfloat scale, kmVec3 color)
         glBindBuffer(GL_ARRAY_BUFFER, VBOTEXT);
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); // Be sure to use glBufferSubData and not glBufferData
 
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
         // Render quad
         glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
         // Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
         x += (ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
         c++;

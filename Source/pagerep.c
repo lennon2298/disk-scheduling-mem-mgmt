@@ -6,6 +6,8 @@
 
 #include<math.h>
 
+//#include "pagerep.h"
+
 int request[9]={0},counter[3]={0},pages[3]={0}, fault[9]={0}, colour[9]={1,1,1,1,1,1,1,1,1}, pagecolour[3]={1,1,1};
 float assign[9]={-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5};
 int dest=0, showresult=0;
@@ -331,7 +333,7 @@ void addMenu()
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
-void displayPage()
+void displayPageLru()
 {
 	int argc;
 	char* argv[10];

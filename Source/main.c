@@ -11,6 +11,8 @@
 #include "firstscreen.h"
 #include "rendertext.h"
 #include "pagerep.h"
+#include "disksch.h"
+#include "pagerepFifo.h"
 
 void processInput(GLFWwindow*);
 void set_framebuffer_size_callback(GLFWwindow*, int, int);
@@ -67,6 +69,7 @@ int main()
     initSstf();
     initLook();
     initTextGlyphs();
+    compileShaderDiskAlgo();
 
     //glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
@@ -116,7 +119,7 @@ int main()
     }
     if(state == 2)
     {
-        displayPage();
+        displayPageFifo();       
     }
     
 }
