@@ -1069,3 +1069,98 @@ void dispLook()
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     diskLook();
 }
+
+void initPageRep()
+{
+    //compileShaderDiskAlgo();
+    // link shaders
+    shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);
+    // check for linking errors
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    if (!success) {
+        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+        printf( "ERROR::SHADER::PROGRAM::LINKING_FAILED\n");
+        printf ("%s\n", infoLog);
+    }
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
+    //Generating Textures
+    
+    int width, height, nrChannels;
+    unsigned char *data;
+
+    //Texture 1
+    glGenTextures(1, &texture[14]);
+
+    glBindTexture(GL_TEXTURE_2D, texture[14]);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    stbi_set_flip_vertically_on_load(GL_TRUE);
+    #ifdef __linux__
+    data = stbi_load("../Source/Resources/Textures/PageReplace.jpg", &width, &height, &nrChannels, 0);
+    #elif _WIN32
+    data = stbi_load("../../Source/Resources/Textures/PageReplace.jpg", &width, &height, &nrChannels, 0);
+    #endif
+    if(data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        printf("Failed to load Texture\n");
+    }
+    stbi_image_free(data);
+
+    float bg[] = {
+         1.0f,  1.0f, 0.0f,  1.0f,  1.0f,
+         1.0f, -1.0f, 0.0f,  1.0f,  0.0f,
+        -1.0f, -1.0f, 0.0f,  0.0f,  0.0f,
+        -1.0f,  1.0f, 0.0f,  0.0f,  1.0f
+    };
+
+    unsigned int indices[] = {  // note that we start from 0!
+        0, 1, 2,  // first Triangle
+        0, 2, 3   // second Triangle
+    };
+
+    glGenVertexArrays(1, &VAO[14]);
+    glGenBuffers(1, &VBO[14]);
+    glGenBuffers(1, &EBO);
+
+    glBindVertexArray(VAO[14]);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO[14]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(bg), bg, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+}
+
+void dispPageRep()
+{
+    GLint textureLocation = glGetUniformLocation(shaderProgram, "bgTex");
+    glUseProgram(shaderProgram);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture[14]);
+    glBindVertexArray(VAO[14]);
+    glUniform1i(textureLocation, 0);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}

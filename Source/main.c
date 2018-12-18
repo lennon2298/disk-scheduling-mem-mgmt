@@ -13,6 +13,7 @@
 #include "pagerep.h"
 #include "disksch.h"
 #include "pagerepFifo.h"
+#include "frag.h"
 
 void processInput(GLFWwindow*);
 void set_framebuffer_size_callback(GLFWwindow*, int, int);
@@ -68,6 +69,7 @@ int main()
     initScan();
     initSstf();
     initLook();
+    initPageRep();
     initTextGlyphs();
 
     //glEnable(GL_CULL_FACE);
@@ -92,7 +94,12 @@ int main()
                 diskScreen();
                 break;
             case 2:
-                glfwSetWindowShouldClose(window, GL_TRUE);
+                //glfwSetWindowShouldClose(window, GL_TRUE);
+                dispPageRep();
+                break;
+            case 3:
+                frag();
+                break;
             default :
                 back();
                 break;
@@ -116,10 +123,10 @@ int main()
 
         glfwSwapBuffers(window);
     }
-    if(state == 2)
-    {
-        displayPageFifo();       
-    }
+    //if(state == 2)
+    //{
+        //displayPageFifo();       
+    //}
     
 }
 
@@ -166,7 +173,7 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mod )
             }
             else if(lastY < -0.65 && lastY > -0.90)
             {
-                //state = 3;
+                state = 3;
             }
         }
     }

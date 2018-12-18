@@ -3,7 +3,7 @@ project(minor1)
 
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source")
 set(LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Resources/include")
-set(SOURCES "${SRC_DIR}/rendertext.c" "${SRC_DIR}/disksch.c" "${SRC_DIR}/pagerep.c" "${SRC_DIR}/pagerepFifo.c" "${SRC_DIR}/main.c" )
+set(SOURCES "${SRC_DIR}/rendertext.c" "${SRC_DIR}/disksch.c" "${SRC_DIR}/pagerep.c" "${SRC_DIR}/pagerepFifo.c" "${SRC_DIR}/frag.c" "${SRC_DIR}/main.c" )
 
 if(WIN32)
 	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)

@@ -83,7 +83,6 @@ void compileShaderDiskAlgo()
     glDeleteShader(vertexShaderTex);
     glDeleteShader(fragmentShaderTex);
 
-    printf("yo");
     srand(time(NULL));
     for(int i=0; i<5; i++)
     {
@@ -124,7 +123,6 @@ void compileShaderDiskAlgo()
         /*Dloc tracks head position and is updated accordingly*/
         for(int j=headLoc; j>=0; j--)
         {
-            //printf("%d --> ",queue[j]);
             queueScan[i] = queue1[j];
             i++;
         }
@@ -132,7 +130,6 @@ void compileShaderDiskAlgo()
         i++;
         for(int j=headLoc+1; j<6; j++)
         {
-            //printf("%d --> ",queue[j]);
             queueScan[i] = queue1[j];
             i++;
         }
@@ -142,7 +139,6 @@ void compileShaderDiskAlgo()
         int i = 0;
         for(int j=headLoc+1; j<6; j++)
         {
-            //printf("%d --> ",queue[j]);
             queueScan[i] = queue1[j];
             i++;
         }
@@ -150,7 +146,6 @@ void compileShaderDiskAlgo()
         i++;
         for(int j=headLoc; j>=0; j--)
         {
-            //printf("%d --> ",queue[j]);
             queueScan[i] = queue1[j];
             i++;
         }
@@ -360,7 +355,6 @@ void diskFcfs()
         char text[10];
         itoa(queueList[i], text);
         renderText(text, texPos, 330.0f, 0.45f, color);
-        //printf("%d\n", queueList[i]);
         texPos += 50.0f;
     }
 
@@ -387,12 +381,6 @@ void diskFcfs()
         vert[i+9+5*i] = 1.0f;
         vert[i+10+5*i] = 1.0f;
         vert[i+11+5*i] = 1.0f;
-
-        printf("%f\t%f\n", xPos1, yPos1);
-        //xPos1 = xPos2;
-        //yPos1 = yPos2;
-        //head = queueList[i];
-        //sleep(1);
     }
 
     glGenVertexArrays(1, &VAOVERT);
@@ -546,7 +534,6 @@ void diskSstf()
         char text[10];
         itoa(queueList[i], text);
         renderText(text, texPos, 330.0f, 0.45f, color);
-        //printf("%d\n", queueList[i]);
         texPos += 50.0f;
     }
 
@@ -593,7 +580,7 @@ void diskSstf()
         vert[i+10+5*i] = 1.0f;
         vert[i+11+5*i] = 1.0f;
 
-        printf("%f\t%f\n", xPos1, yPos1);
+        //printf("%f\t%f\n", xPos1, yPos1);
         //xPos1 = xPos2;
         //yPos1 = yPos2;
         //head = queueList[i];
@@ -751,7 +738,6 @@ void diskLook()
         char text[10];
         itoa(queueList[i], text);
         renderText(text, texPos, 330.0f, 0.45f, color);
-        //printf("%d\n", queueList[i]);
         texPos += 50.0f;
     }
 
@@ -781,12 +767,6 @@ void diskLook()
         vert[i+9+5*i] = 1.0f;
         vert[i+10+5*i] = 1.0f;
         vert[i+11+5*i] = 1.0f;
-
-        //printf("%f\t%f\n", xPos1, yPos1);
-        //xPos1 = xPos2;
-        //yPos1 = yPos2;
-        //head = queueList[i];
-        //sleep(1);
     }
 
     glGenVertexArrays(1, &VAOVERT);
@@ -940,7 +920,6 @@ void diskScan()
         char text[10];
         itoa(queueList[i], text);
         renderText(text, texPos, 330.0f, 0.45f, color);
-        //printf("%d\n", queueList[i]);
         texPos += 50.0f;
     }
     
@@ -970,12 +949,6 @@ void diskScan()
         vert[i+9+5*i] = 1.0f;
         vert[i+10+5*i] = 1.0f;
         vert[i+11+5*i] = 1.0f;
-
-        //printf("%f\t%f\n", xPos1, yPos1);
-        //xPos1 = xPos2;
-        //yPos1 = yPos2;
-        //head = queueList[i];
-        //sleep(1);
     }
 
     glGenVertexArrays(1, &VAOVERT);
