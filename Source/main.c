@@ -69,7 +69,6 @@ int main()
     initSstf();
     initLook();
     initTextGlyphs();
-    compileShaderDiskAlgo();
 
     //glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
@@ -179,6 +178,7 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mod )
             if(lastY < 0.90 && lastY > 0.20)
             {
                 diskSwitch = 1; //fcfs
+                compileShaderDiskAlgo();
                 state = 6;
             }
         }
@@ -187,6 +187,7 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mod )
             if(lastY < 0.90 && lastY > 0.20)
             {
                 diskSwitch = 2; //sstf
+                compileShaderDiskAlgo();
                 state = 6;
             }
         }
@@ -195,6 +196,7 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mod )
             if(lastY < -0.20 && lastY > -0.90)
             {
                 diskSwitch = 3; //look
+                compileShaderDiskAlgo();
                 state = 6;
             }
         }
@@ -203,6 +205,7 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mod )
             if(lastY < -0.20 && lastY > -0.90)
             {
                 diskSwitch = 4; //scan
+                compileShaderDiskAlgo();
                 state = 6;
             }
         }

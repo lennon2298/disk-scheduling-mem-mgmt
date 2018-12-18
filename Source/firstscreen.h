@@ -688,7 +688,7 @@ void diskScreen()
 
 void initFcfs()
 {
-    compileShaderDiskAlgo();
+    //compileShaderDiskAlgo();
     // link shaders
     shaderProgram = glCreateProgram();
     glAttachShader(shaderProgram, vertexShader);
