@@ -2,3 +2,4 @@
 
 void compileShaderDiskAlgo();
 void diskFcfs();
+void diskSstf();
