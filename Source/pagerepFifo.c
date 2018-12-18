@@ -246,7 +246,7 @@ void mouseFifo(int btn,int state,int x, int y)
 			if(requestFifo[stepFifo]==pagesFifo[i])
 			{
 				faultFifo[stepFifo]=0;
-				counterFifo[i]=0;
+				//counterFifo[i]=0;
 
 				for(j=0;j<3;j++)
 					if(j!=i) counterFifo[j]++;
